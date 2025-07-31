@@ -1,3 +1,6 @@
+import TaskItem from "./components/TaskItem"; 
+import { use, useState } from "react"; 
+
 function AddTask() {
   return (
     <div className="top-container mx-auto flex flex-col items-center">
@@ -12,46 +15,28 @@ function AddTask() {
   )
 }
 
-function Tasks() {
+function Tasks({tasks}) {
   return (
     <ul className="bg-amber-300 flex-grow text-cyan-800 text-2xl leading-8.5 p-5 md:p-20 flex flex-col gap-5 font-semibold">
-      <li className="task-li flex items-center gap-4">
-        <p className="flex-grow">Complete your stuff</p>
-        <div className="icon-container flex flex-shrink-0 gap-4 p-0">
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/edit-button.svg"/>
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/remove-button.svg"/>
-        </div>
-      </li>
-
-
-      <li className="task-li flex items-center gap-4">
-        <p className="flex-grow">Finish The Project</p>
-        <div className="icon-container flex flex-shrink-0 gap-4 p-0">
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/edit-button.svg"/>
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/remove-button.svg"/>
-        </div>
-      </li>
-
-      <li className="task-li flex items-center gap-4">
-        <p className="flex-grow">Find Something Great to do</p>
-        <div className="icon-container flex flex-shrink-0 gap-4 p-0">
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/edit-button.svg"/>
-          <img className="w-[45px] hover:scale-120 transition cursor-pointer" src="/src/assets/remove-button.svg"/>
-        </div>
-      </li>
-      
-
-      
+     <TaskItem task={tasks[0]}/>
+     <TaskItem task={tasks[1]}/>
+     <TaskItem task={tasks[2]}/>
     </ul>
   )
 }
 
 export default function ToDoApp() {
+  const [tasks, setTasks] = useState([
+    {id: 1, text: "Learn React"}, 
+    {id: 2, text: "Master Tailwind CSS"}, 
+    {id: 3, text: "Become a full stack developer"}
+  ])
+
   return (
     <div className="min-h-screen font-mono bg-cyan-100 flex flex-col">
       <h1>To Do List App</h1>
       <AddTask/>
-      <Tasks/>
+      <Tasks tasks={tasks}/>
     </div>
   )
 }
