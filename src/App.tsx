@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+function AddTask() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="top-container mx-auto flex flex-col items-center">
+      <div className="heading-container">
+        <h1 className="text-5xl font-bold text-center tracking-tight my-6">to do list</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="input-container p-6 flex gap-5">
+        <input className="bg-purple-50 px-8 py-2 text-2xl rounded-2xl border-amber-300 outline-1 outline-amber-400 outline-offset-1 focus:outline-3 focus:-outline-offset-0" type="text" placeholder="your new task..."/>
+        <button className="add-btn bg-amber-400 px-4 rounded-[10px] text-xl text-white">Add</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
-export default App
+function Tasks() {
+  return (
+    <ul className="bg-cyan-300">
+      <li>
+        <p>Complete this project</p>
+        <div className="icon-container">
+
+        </div>
+      </li>
+
+      <li>
+        <p>Complete this project</p>
+        <div className="icon-container">
+          
+        </div>
+      </li>
+
+      <li>
+        <p>Complete this project</p>
+        <div className="icon-container">
+          
+        </div>
+      </li>
+    </ul>
+  )
+}
+
+export default function ToDoApp() {
+  return (
+    <div className="h-full font-mono bg-cyan-100">
+      <h1>To Do List App</h1>
+      <AddTask/>
+      <Tasks/>
+    </div>
+  )
+}
