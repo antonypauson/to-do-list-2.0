@@ -1,9 +1,13 @@
 import TaskItem from "./components/TaskItem"; 
 import { useState } from "react"; 
 
-function AddTask({newTaskInput, onNewTaskInput, handleClick}) {
+interface Task {
+  id: number; 
+  text: string; 
+}
 
-  const handleEnterKey = (event) => {
+function AddTask({newTaskInput, onNewTaskInput, handleClick}: {newTaskInput: string, onNewTaskInput: (value:string) => void, handleClick: () => void}) {
+  const handleEnterKey = (event: React.KeyboardEvent) => {
     if (event.key == "Enter") {
       handleClick(); 
     }
@@ -22,7 +26,7 @@ function AddTask({newTaskInput, onNewTaskInput, handleClick}) {
   )
 }
 
-function Tasks({tasks}) {
+function Tasks({tasks} : {tasks: Task[]}) {
   return (
     <ul className="bg-amber-300 flex-grow text-cyan-800 text-2xl leading-8.5 p-5 md:p-20 flex flex-col gap-5 font-semibold">
 
