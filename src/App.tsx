@@ -89,7 +89,7 @@ export default function ToDoApp() {
     if (editFlag) {
       console.log("HI");
       setTasks(
-        tasks.map((task) =>
+        tasks.map((task:Task) =>
           task.id === editFlag ? { ...task, text: newTaskInput } : task
         )
       );
@@ -107,12 +107,12 @@ export default function ToDoApp() {
   }
 
   function handleDelete(id: number) {
-    setTasks(tasks.filter((task) => task.id != id));
+    setTasks(tasks.filter((task: Task) => task.id != id));
   }
 
   function handleEdit(id: number) {
     console.log("let us edit ", id);
-    const taskToEdit = tasks.find((task) => task.id == id);
+    const taskToEdit = tasks.find((task: Task) => task.id == id);
     if (taskToEdit) {
       console.log(taskToEdit);
       setEditFlag(id);
