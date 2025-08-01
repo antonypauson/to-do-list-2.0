@@ -72,6 +72,23 @@ function Tasks({
 }
 
 export default function ToDoApp() {
+  /*
+
+  - localStorage.setItem("key", "value"); 
+  - localStorage.getItem("key"); 
+
+  - 'useState()' is used to initialize tasks array from 'localStorage'
+  - so everytime you reload, it tries to get "tasks" stored in localStorage
+  - if no "tasks" stored in localStorage -> empty array intialization as "tasks"
+  - everything inside localStorage is stored as JSON string, so we need parse for converting it back to js Object, thus JSON.parse()
+
+  - 'useEffect(() => {
+     what to do when change occurs
+    }, [changing element])'
+  - whenever 'tasks' array of objects changes -> we set localStorage
+  - localStorage only have string/JSON format -> JSON.stringfiy()
+
+  */
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem("tasks"); 
     return savedTasks ? JSON.parse(savedTasks) : []; 
