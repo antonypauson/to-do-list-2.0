@@ -48,7 +48,7 @@ function AddTask({
   );
 }
 
-function Tasks({ tasks, onDelete }: { tasks: Task[] }) {
+function Tasks({ tasks, onDelete, onEdit }: { tasks: Task[] }) {
   return (
     <ul className="bg-amber-300 flex-grow text-cyan-800 text-2xl leading-8.5 p-5 md:p-20 flex flex-col gap-5 font-semibold">
       {tasks.map((eachTask) => (
@@ -56,6 +56,7 @@ function Tasks({ tasks, onDelete }: { tasks: Task[] }) {
           task={eachTask}
           key={eachTask.id}
           onDelete={() => onDelete(eachTask.id)}
+          onEdit={() => onEdit(eachTask.id)}
         />
       ))}
     </ul>
@@ -72,20 +73,35 @@ export default function ToDoApp() {
 
   const [newTaskInput, setNewTaskInput] = useState("");
 
+  const [editFlag, setEditFlag] = useState(null);
+
   function handleClick() {
-    if (newTaskInput.trim() == "") {
-      return;
+    if (editFlag) {
+     console.log("HI");
+     setTasks(tasks.map((task) => task.id === editFlag ? {...task, text: newTaskInput} : task)); 
+     setEditFlag(null);
+     setNewTaskInput(""); 
+    } else {
+      if (newTaskInput.trim() == "") {
+        return;
+      }
+
+      const newTask = { id: tasks.length + 1, text: newTaskInput };
+      setTasks([...tasks, newTask]);
+      setNewTaskInput("");
     }
-
-    const newTask = { id: tasks.length + 1, text: newTaskInput };
-
-    setTasks([...tasks, newTask]);
-
-    setNewTaskInput("");
   }
 
   function handleDelete(id: number) {
     setTasks(tasks.filter((task) => task.id != id));
+  }
+
+  function handleEdit(id: number) {
+    console.log("let us edit ", id);
+    const taskToEdit = tasks.find((task) => task.id == id); 
+    console.log(taskToEdit);
+    setEditFlag(id);
+    setNewTaskInput(taskToEdit.text); 
   }
 
   return (
@@ -96,7 +112,7 @@ export default function ToDoApp() {
         onNewTaskInput={setNewTaskInput}
         handleClick={handleClick}
       />
-      <Tasks tasks={tasks} onDelete={handleDelete}/>
+      <Tasks tasks={tasks} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 }
