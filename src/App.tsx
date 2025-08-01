@@ -1,7 +1,7 @@
 import TaskItem from "./components/TaskItem";
 import { useState } from "react";
 
-interface Task {
+export interface Task {
   id: number;
   text: string;
 }
@@ -48,7 +48,15 @@ function AddTask({
   );
 }
 
-function Tasks({ tasks, onDelete, onEdit }: { tasks: Task[] }) {
+function Tasks({
+  tasks,
+  onDelete,
+  onEdit,
+}: {
+  tasks: Task[];
+  onDelete: (id: number) => void;
+  onEdit: (id: number) => void;
+}) {
   return (
     <ul className="bg-amber-300 flex-grow text-cyan-800 text-2xl leading-8.5 p-5 md:p-20 flex flex-col gap-5 font-semibold">
       {tasks.map((eachTask) => (
@@ -73,14 +81,18 @@ export default function ToDoApp() {
 
   const [newTaskInput, setNewTaskInput] = useState("");
 
-  const [editFlag, setEditFlag] = useState(null);
+  const [editFlag, setEditFlag] = useState<number | null>(null);
 
   function handleClick() {
     if (editFlag) {
-     console.log("HI");
-     setTasks(tasks.map((task) => task.id === editFlag ? {...task, text: newTaskInput} : task)); 
-     setEditFlag(null);
-     setNewTaskInput(""); 
+      console.log("HI");
+      setTasks(
+        tasks.map((task) =>
+          task.id === editFlag ? { ...task, text: newTaskInput } : task
+        )
+      );
+      setEditFlag(null);
+      setNewTaskInput("");
     } else {
       if (newTaskInput.trim() == "") {
         return;
@@ -98,10 +110,12 @@ export default function ToDoApp() {
 
   function handleEdit(id: number) {
     console.log("let us edit ", id);
-    const taskToEdit = tasks.find((task) => task.id == id); 
-    console.log(taskToEdit);
-    setEditFlag(id);
-    setNewTaskInput(taskToEdit.text); 
+    const taskToEdit = tasks.find((task) => task.id == id);
+    if (taskToEdit) {
+      console.log(taskToEdit);
+      setEditFlag(id);
+      setNewTaskInput(taskToEdit.text);
+    }
   }
 
   return (
