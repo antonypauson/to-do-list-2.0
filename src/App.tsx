@@ -1,5 +1,5 @@
 import TaskItem from "./components/TaskItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface Task {
   id: number;
@@ -72,12 +72,14 @@ function Tasks({
 }
 
 export default function ToDoApp() {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: "Learn React" },
-    { id: 2, text: "Master Tailwind CSS" },
-    { id: 3, text: "Become a full stack developer" },
-    { id: 4, text: "Read a book" },
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks"); 
+    return savedTasks ? JSON.parse(savedTasks) : []; 
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+  }, [tasks]); 
 
   const [newTaskInput, setNewTaskInput] = useState("");
 
