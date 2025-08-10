@@ -1,5 +1,6 @@
+import { Container } from "@mui/material";
 export default function PageLayout({children}) {
     return (
-      <div className="">{children}</div>
+      <Container className="flex flex-col items-center gap-5">{children}</Container>
     );
 }
