@@ -12,7 +12,7 @@ export default function ToDoApp() {
     {
       id: 0,
       name: "First Task",
-      done: false,
+      done: true,
     },
     {
       id: 1,
@@ -48,6 +48,17 @@ export default function ToDoApp() {
     console.log(query);
   }
 
+  function handleOnChange(newTask) {
+    const newTasks = tasks.map(task => {
+      if (task.id === newTask.id) {
+        return newTask; 
+      } else {
+        return task; 
+      }
+    })
+    setTasks(newTasks); 
+  }
+
   return (
     <PageLayout>
       <ToDoTitle />
@@ -55,8 +66,9 @@ export default function ToDoApp() {
         onAdd={handleAdd}
         onChange={handleSearchChange}
         value={query}
+        empty={emptyTaskList}
       />
-      <ToDoItems tasks={filteredTasks} empty={emptyTaskList} />
+      <ToDoItems tasks={filteredTasks} empty={emptyTaskList} onChange={handleOnChange}/>
       <DeleteButton onDeleteAll={handleDeleteAll} empty={emptyTaskList} />
     </PageLayout>
   );

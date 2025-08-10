@@ -5,7 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Checkbox, Alert } from "@mui/material";
 
-export default function ToDoItems({tasks, empty}) {
+export default function ToDoItems({tasks, empty, onChange}) {
   if (empty) {
     return (
       <Box sx={{ width: "80%", margin: "auto" }}>
@@ -20,7 +20,7 @@ export default function ToDoItems({tasks, empty}) {
       <Stack direction="column" spacing={2}>
         {tasks.map((eachTask) => (
           <Item key={eachTask.id}>
-            <Checkbox color="success"/>
+            <Checkbox color="success" checked={eachTask.done} onChange={(e) => onChange({...eachTask, done: e.target.checked})}/>
             {eachTask.name}
             <Button startIcon={<EditIcon />} />
             <Button startIcon={<DeleteIcon />} />

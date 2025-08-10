@@ -41,7 +41,6 @@ export default function NewTaskAlert({onAdd, children}) {
             <form onSubmit={handleSubmit} id="task-form">
               <TextField
                 value={newTask} 
-                autoFocus
                 required
                 fullWidth
                 variant="standard"
