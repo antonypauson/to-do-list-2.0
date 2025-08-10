@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-
+import filteringTask from "./utils/filteringTask";
 import PageLayout from "./components/PageLayout";
 import ToDoTitle from "./components/ToDoTitle";
-import FooterButtons from "./components/DeleteButton";
 import ToDoItems from "./components/ToDoItems";
 import SearchInput from "./components/SearchInput";
+import DeleteButton from "./components/DeleteButton";
 
 export default function ToDoApp() {
   const [tasks, setTasks] = useState([
@@ -24,7 +24,9 @@ export default function ToDoApp() {
       done: false,
     },
   ]);
-  
+
+  const emptyTaskList = tasks.length === 0; 
+
   function handleAdd(taskName) {
     const newTask = {
       id: tasks.length, 
@@ -33,15 +35,19 @@ export default function ToDoApp() {
     }
     setTasks([...tasks, newTask]); 
     console.log(tasks);
-    
+  }
+
+  function handleDeleteAll() {
+    const newTask = []; 
+    setTasks(newTask); 
   }
 
   return (
     <PageLayout>
       <ToDoTitle />
-      <SearchInput onAdd={handleAdd}/>
-      <ToDoItems tasks={tasks}/>
-      <FooterButtons />
+      <SearchInput onAdd={handleAdd} />
+      <ToDoItems tasks={tasks} empty={emptyTaskList} />
+      <DeleteButton onDeleteAll={handleDeleteAll} empty={emptyTaskList} />
     </PageLayout>
   );
 }
