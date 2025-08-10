@@ -9,7 +9,7 @@ export default function ToDoItems({tasks}) {
     <Box sx={{width: '80%', margin: 'auto'}}>
       <Stack direction="column" spacing={2}>
         {tasks.map(eachTask => 
-          <Item>{eachTask.name} <EditIcon/> <DeleteIcon/></Item>
+          <Item key={eachTask.id}>{eachTask.name} <EditIcon/> <DeleteIcon/></Item>
         )}
       </Stack>
     </Box>
