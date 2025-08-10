@@ -3,9 +3,18 @@ import Box from "@mui/material/Box";
 import Item from "./Item";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Checkbox } from "@mui/material";
+import { Button, Checkbox, Alert } from "@mui/material";
 
-export default function ToDoItems({tasks}) {
+export default function ToDoItems({tasks, empty}) {
+  if (empty) {
+    return (
+      <Box sx={{ width: "80%", margin: "auto" }}>
+        <Alert variant="outlined" severity="error">
+          No Tasks for you now
+        </Alert>
+      </Box>
+    );
+  }
   return (
     <Box sx={{ width: "80%", margin: "auto" }}>
       <Stack direction="column" spacing={2}>
