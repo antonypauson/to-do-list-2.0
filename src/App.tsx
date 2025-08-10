@@ -7,6 +7,7 @@ import SearchInput from "./components/SearchInput";
 import DeleteButton from "./components/DeleteButton";
 
 export default function ToDoApp() {
+  const [query, setQuery] = useState("");
   const [tasks, setTasks] = useState([
     {
       id: 0,
@@ -24,29 +25,38 @@ export default function ToDoApp() {
       done: false,
     },
   ]);
-
-  const emptyTaskList = tasks.length === 0; 
+  const emptyTaskList = tasks.length === 0;
+  let filteredTasks = filteringTask(tasks, query);
 
   function handleAdd(taskName) {
     const newTask = {
-      id: tasks.length, 
-      name: taskName, 
-      done: false, 
-    }
-    setTasks([...tasks, newTask]); 
+      id: tasks.length,
+      name: taskName,
+      done: false,
+    };
+    setTasks([...tasks, newTask]);
     console.log(tasks);
   }
 
   function handleDeleteAll() {
-    const newTask = []; 
-    setTasks(newTask); 
+    const newTask = [];
+    setTasks(newTask);
+  }
+
+  function handleSearchChange(e) {
+    setQuery(e.target.value);
+    console.log(query);
   }
 
   return (
     <PageLayout>
       <ToDoTitle />
-      <SearchInput onAdd={handleAdd} />
-      <ToDoItems tasks={tasks} empty={emptyTaskList} />
+      <SearchInput
+        onAdd={handleAdd}
+        onChange={handleSearchChange}
+        value={query}
+      />
+      <ToDoItems tasks={filteredTasks} empty={emptyTaskList} />
       <DeleteButton onDeleteAll={handleDeleteAll} empty={emptyTaskList} />
     </PageLayout>
   );
