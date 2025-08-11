@@ -1,12 +1,20 @@
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
-import { useState } from "react"; 
+import { useState, useEffect, useRef } from "react"; 
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 
 export default function NewTaskAlert({onAdd, children}) {
     const [open, setOpen] = useState(false); 
     const [newTask, setNewTask] = useState(""); 
+    const inputRef = useRef(null); 
 
+    useEffect(() => {
+      if (open) {
+        setTimeout(() => {
+          inputRef.current?.focus(); 
+        }, 0); 
+      }
+    }, [open]); 
 
     function handleOpen() {
         setOpen(true); 
@@ -26,32 +34,35 @@ export default function NewTaskAlert({onAdd, children}) {
 
     return (
       <>
-        <Button variant="contained" onClick={handleOpen}>{children}</Button>
-        <Dialog 
-          open={open}
-          onClose={handleClose}
+        <Button
+          variant="contained"
+          onClick={handleOpen}
+          disableRipple
+          disableFocusRipple
         >
-          <DialogTitle>
-            Adding new task 
-          </DialogTitle>
+          {children}
+        </Button>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Adding new task</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Enter your new task name
-            </DialogContentText>
+            <DialogContentText>Enter your new task name</DialogContentText>
             <form onSubmit={handleSubmit} id="task-form">
               <TextField
-                value={newTask} 
+              inputRef={inputRef}
+                value={newTask}
                 required
                 fullWidth
                 variant="standard"
-                onChange={e => setNewTask(e.target.value)}/>
+                onChange={(e) => setNewTask(e.target.value)}
+              />
             </form>
           </DialogContent>
           <DialogActions>
-            <Button type="submit" form="task-form">Add</Button>
+            <Button type="submit" form="task-form">
+              Add
+            </Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
-
         </Dialog>
       </>
     );
