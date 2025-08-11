@@ -19,11 +19,20 @@ export default function ToDoItems({tasks, empty, onChange, onDelete}) {
     <Box sx={{ width: "80%", margin: "auto" }}>
       <Stack direction="column" spacing={2}>
         {tasks.map((eachTask) => (
-          <Item key={eachTask.id}>
-            <Checkbox color="success" checked={eachTask.done} onChange={(e) => onChange({...eachTask, done: e.target.checked})}/>
-            {eachTask.name}
-            <EditTaskAlert task={eachTask} onChange={onChange}/>
-            <Button startIcon={<DeleteIcon />} onClick={() => onDelete(eachTask.id)}/>
+          <Item key={eachTask.id} >
+            <Checkbox
+              color="success"
+              checked={eachTask.done}
+              onChange={(e) =>
+                onChange({ ...eachTask, done: e.target.checked })
+              }
+            />
+            <p className={`${eachTask.done ? "line-through" : ""}`} style={{flexGrow: 1}}>{eachTask.name}</p>
+            <EditTaskAlert task={eachTask} onChange={onChange} />
+            <Button
+              startIcon={<DeleteIcon />}
+              onClick={() => onDelete(eachTask.id)}
+            />
           </Item>
         ))}
       </Stack>
