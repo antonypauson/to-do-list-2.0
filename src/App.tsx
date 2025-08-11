@@ -59,6 +59,11 @@ export default function ToDoApp() {
     setTasks(newTasks); 
   }
 
+  function handleOnDelete(taskId) {
+    const newTasks = tasks.filter(task => task.id !== taskId); 
+    setTasks(newTasks); 
+  }
+
   return (
     <PageLayout>
       <ToDoTitle />
@@ -68,7 +73,7 @@ export default function ToDoApp() {
         value={query}
         empty={emptyTaskList}
       />
-      <ToDoItems tasks={filteredTasks} empty={emptyTaskList} onChange={handleOnChange}/>
+      <ToDoItems tasks={filteredTasks} empty={emptyTaskList} onChange={handleOnChange} onDelete={handleOnDelete}/>
       <DeleteButton onDeleteAll={handleDeleteAll} empty={emptyTaskList} />
     </PageLayout>
   );
