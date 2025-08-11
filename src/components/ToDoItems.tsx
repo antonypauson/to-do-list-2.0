@@ -6,6 +6,13 @@ import { Button, Checkbox, Alert } from "@mui/material";
 import EditTaskAlert from "./EditTaskAlert";
 
 export default function ToDoItems({tasks, empty, onChange, onDelete}) {
+  const copyTasks = [...tasks]; 
+  copyTasks.sort((a,b) => {
+    if (a.done === b.done) return 0; 
+    if (!a.done && b.done) return -1; 
+    return 1; 
+  })
+  
   if (empty) {
     return (
       <Box sx={{ width: "80%", margin: "auto" }}>
@@ -18,7 +25,7 @@ export default function ToDoItems({tasks, empty, onChange, onDelete}) {
   return (
     <Box sx={{ width: "80%", margin: "auto" }}>
       <Stack direction="column" spacing={2}>
-        {tasks.map((eachTask) => (
+        {copyTasks.map((eachTask) => (
           <Item key={eachTask.id} >
             <Checkbox
               color="success"
