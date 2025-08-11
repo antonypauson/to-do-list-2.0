@@ -9,8 +9,17 @@ export default function ToDoTitle() {
        sx={{
         textTransform: 'uppercase', 
         fontWeight: 'bold', 
-        my: 4, 
-        color: 'primary.main'
+        color: 'primary.main', 
+        fontSize: {
+            xs: "1.75rem", 
+            sm: "2.25rem", 
+            md: "3rem", 
+        }, 
+        my: {
+            xs: 2, 
+            sm: 3, 
+            md: 4, 
+        }
        }}>
         2 Do List
        </Typography>

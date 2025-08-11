@@ -1,7 +1,7 @@
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import { useState, useRef, useEffect} from "react"; 
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 export default function EditTaskAlert({task, onChange}) {
@@ -35,33 +35,35 @@ export default function EditTaskAlert({task, onChange}) {
 
     return (
       <>
-        <Button variant="text" onClick={handleOpen} disableRipple disableFocusRipple><EditIcon/></Button>
-        <Dialog 
-          open={open}
-          onClose={handleClose}
+        <IconButton
+          onClick={handleOpen}
+          disableRipple
+          disableFocusRipple
+          color="primary"
         >
-          <DialogTitle>
-            
-          </DialogTitle>
+          <EditIcon />
+        </IconButton>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Editing '{task.name}'</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Enter your new task name
-            </DialogContentText>
+            <DialogContentText>Edit your task name</DialogContentText>
             <form onSubmit={handleSubmit} id="task-form">
               <TextField
-                value={newTask} 
+                value={newTask}
                 inputRef={inputRef}
                 required
                 fullWidth
                 variant="standard"
-                onChange={e => setNewTask(e.target.value)}/>
+                onChange={(e) => setNewTask(e.target.value)}
+              />
             </form>
           </DialogContent>
           <DialogActions>
-            <Button type="submit" form="task-form">Edit</Button>
+            <Button type="submit" form="task-form">
+              Edit
+            </Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
-
         </Dialog>
       </>
     );

@@ -2,10 +2,18 @@ import  Stack  from "@mui/material/Stack";
 import Box from "@mui/material/Box"; 
 import Item from "./Item";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Checkbox, Alert } from "@mui/material";
+import { Checkbox, Alert, Typography, IconButton } from "@mui/material";
 import EditTaskAlert from "./EditTaskAlert";
+import type { Task } from "../types";
 
-export default function ToDoItems({tasks, empty, onChange, onDelete}) {
+type ToDoItemsProps = {
+  tasks: Task[]; 
+  empty: boolean; 
+  onChange: (task: Task) => void; 
+  onDelete: (id: number) => void; 
+}
+
+export default function ToDoItems({tasks, empty, onChange, onDelete}: ToDoItemsProps) {
   const copyTasks = [...tasks]; 
   copyTasks.sort((a,b) => {
     if (a.done === b.done) return 0; 
@@ -15,15 +23,15 @@ export default function ToDoItems({tasks, empty, onChange, onDelete}) {
   
   if (empty) {
     return (
-      <Box sx={{ width: "80%", margin: "auto" }}>
-        <Alert variant="outlined" severity="error">
+      <Box sx={{ width: "100%"}}>
+        <Alert variant="outlined" severity="error" sx={{width: '100%'}}>
           No Tasks for you now
         </Alert>
       </Box>
     );
   }
   return (
-    <Box sx={{ width: "80%", margin: "auto" }}>
+    <Box sx={{ width: "100%"}}>
       <Stack direction="column" spacing={2}>
         {copyTasks.map((eachTask) => (
           <Item key={eachTask.id} >
@@ -34,12 +42,21 @@ export default function ToDoItems({tasks, empty, onChange, onDelete}) {
                 onChange({ ...eachTask, done: e.target.checked })
               }
             />
-            <p className={`${eachTask.done ? "line-through" : ""}`} style={{flexGrow: 1}}>{eachTask.name}</p>
+            <Typography 
+            sx={{
+              flexGrow: 1, 
+              textDecoration: eachTask.done ? "line-through" : "none", 
+              color: eachTask.done ? "text.disabled" : "text.primary", 
+            }}>
+              {eachTask.name}
+            </Typography>
             <EditTaskAlert task={eachTask} onChange={onChange} />
-            <Button
-              startIcon={<DeleteIcon />}
+            <IconButton
               onClick={() => onDelete(eachTask.id)}
-            />
+              color="error"
+            >
+              <DeleteIcon/>
+            </IconButton>
           </Item>
         ))}
       </Stack>

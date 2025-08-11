@@ -1,13 +1,16 @@
 import TextField from "@mui/material/TextField";
 import Stack  from "@mui/material/Stack";
-// import Button  from "@mui/material/Button";
+import Box from "@mui/material/Box"; 
 import NewTaskAlert from "./NewTaskAlert";
+
 export default function SearchInput({onAdd, query, onChange, empty}) {
     return (
-      <Stack direction="row" gap={5} >
-        {!empty && <TextField label="Search a task" variant="outlined" size="small" id="fullWidth" value={query} onChange={e => onChange(e)}>
-          HI SearchINput
-        </TextField>}
+      <Stack direction="row" spacing={2} sx={{width: '100%', alignItems: 'center'}}>
+        {!empty && (
+          <Box sx={{flexGrow: 1}}>
+            <TextField label="Search a task" variant="outlined" size="small" fullWidth value={query} onChange={e => onChange(e)}/>
+          </Box>
+        )}
         <NewTaskAlert onAdd={onAdd}>Add New Task</NewTaskAlert>
       </Stack>
     );

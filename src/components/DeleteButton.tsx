@@ -5,7 +5,7 @@ export default function DeleteButton({onDeleteAll, empty}) {
   return (
     <Stack direction="row" spacing={2}>
       {!empty &&
-        (<Button variant="contained" onClick={onDeleteAll}>
+        (<Button variant="contained" onClick={onDeleteAll} color="error">
           Delete All
         </Button>)
       }

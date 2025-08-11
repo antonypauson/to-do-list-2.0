@@ -1,12 +1,17 @@
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import { useState, useEffect, useRef } from "react"; 
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, IconButton, useMediaQuery } from "@mui/material";
+import {useTheme} from "@mui/material/styles"; 
+import AddIcon from "@mui/icons-material/Add"; 
 
 export default function NewTaskAlert({onAdd, children}) {
     const [open, setOpen] = useState(false); 
     const [newTask, setNewTask] = useState(""); 
     const inputRef = useRef(null); 
+
+    const theme = useTheme(); 
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
 
     useEffect(() => {
       if (open) {
@@ -34,21 +39,26 @@ export default function NewTaskAlert({onAdd, children}) {
 
     return (
       <>
+        {isSmallScreen ? (
+          <IconButton color="primary" onClick={handleOpen}>
+            <AddIcon/>
+          </IconButton>
+        ) : (
         <Button
           variant="contained"
           onClick={handleOpen}
-          disableRipple
-          disableFocusRipple
         >
           {children}
         </Button>
+        )}
+        
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Adding new task</DialogTitle>
           <DialogContent>
             <DialogContentText>Enter your new task name</DialogContentText>
             <form onSubmit={handleSubmit} id="task-form">
               <TextField
-              inputRef={inputRef}
+                inputRef={inputRef}
                 value={newTask}
                 required
                 fullWidth
