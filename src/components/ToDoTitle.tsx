@@ -1,5 +1,18 @@
+import { Typography } from "@mui/material"; 
+
+
 export default function ToDoTitle() {
     return (
-       <h1 className="text-3xl uppercase font-extrabold my-5">To Do List</h1>
+       <Typography
+       variant="h3"
+       component="h1"
+       sx={{
+        textTransform: 'uppercase', 
+        fontWeight: 'bold', 
+        my: 4, 
+        color: 'primary.main'
+       }}>
+        2 Do List
+       </Typography>
     )
 }
