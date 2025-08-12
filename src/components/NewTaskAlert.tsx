@@ -1,14 +1,19 @@
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
-import { useState, useEffect, useRef } from "react"; 
+import { useState, useEffect, useRef, type ReactNode, type FormEvent} from "react"; 
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, IconButton, useMediaQuery } from "@mui/material";
 import {useTheme} from "@mui/material/styles"; 
 import AddIcon from "@mui/icons-material/Add"; 
 
-export default function NewTaskAlert({onAdd, children}) {
+type NewTaskAlertProps = {
+  onAdd: (taskName: string) => void; 
+  children: ReactNode; 
+}
+
+export default function NewTaskAlert({onAdd, children}: NewTaskAlertProps) {
     const [open, setOpen] = useState(false); 
     const [newTask, setNewTask] = useState(""); 
-    const inputRef = useRef(null); 
+    const inputRef = useRef<HTMLInputElement>(null); 
 
     const theme = useTheme(); 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
@@ -29,7 +34,7 @@ export default function NewTaskAlert({onAdd, children}) {
         setOpen(false); 
     }
 
-    function handleSubmit(e) { 
+    function handleSubmit(e: FormEvent<HTMLFormElement>) { 
       e.preventDefault(); 
       onAdd(newTask); 
       setNewTask(""); 

@@ -1,14 +1,21 @@
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import { useState, useRef, useEffect} from "react"; 
+import type { FormEvent } from "react";
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import type { Task } from "../types";
 
-export default function EditTaskAlert({task, onChange}) {
+type EditTaskAlertProps = {
+  task: Task; 
+  onChange: (task: Task) => void; 
+}
+
+export default function EditTaskAlert({task, onChange} : EditTaskAlertProps) {
   
     const [open, setOpen] = useState(false); 
     const [newTask, setNewTask] = useState(task.name); 
-    const inputRef = useRef(null); 
+    const inputRef = useRef<HTMLInputElement>(null); 
 
     useEffect(() => {
       if (open) {
@@ -26,7 +33,7 @@ export default function EditTaskAlert({task, onChange}) {
         setOpen(false); 
     }
 
-    function handleSubmit(e) { 
+    function handleSubmit(e: FormEvent<HTMLFormElement>) { 
       e.preventDefault(); 
       onChange({...task, name: newTask}); 
       setOpen(false); 

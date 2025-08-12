@@ -1,7 +1,12 @@
 import { Stack } from "@mui/material"
 import {Button} from "@mui/material"
 
-export default function DeleteButton({onDeleteAll, empty}) {
+type DeleteButtonProps = {
+  onDeleteAll: () => void; 
+  empty: boolean; 
+}
+
+export default function DeleteButton({onDeleteAll, empty} : DeleteButtonProps) {
   return (
     <Stack direction="row" spacing={2}>
       {!empty &&

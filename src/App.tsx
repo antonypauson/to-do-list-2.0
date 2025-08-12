@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import filteringTask from "./utils/filteringTask";
 import PageLayout from "./components/PageLayout";
 import ToDoTitle from "./components/ToDoTitle";
 import ToDoItems from "./components/ToDoItems";
 import SearchInput from "./components/SearchInput";
 import DeleteButton from "./components/DeleteButton";
+import type { Task } from "./types";
 
 export default function ToDoApp() {
   const [query, setQuery] = useState("");
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<Task[]>([
     {
       id: 0,
       name: "First Task",
@@ -26,9 +27,9 @@ export default function ToDoApp() {
     },
   ]);
   const emptyTaskList = tasks.length === 0;
-  let filteredTasks = filteringTask(tasks, query);
+  const filteredTasks = filteringTask(tasks, query);
 
-  function handleAdd(taskName) {
+  function handleAdd(taskName: string) {
     const newTask = {
       id: tasks.length,
       name: taskName,
@@ -39,16 +40,16 @@ export default function ToDoApp() {
   }
 
   function handleDeleteAll() {
-    const newTask = [];
+    const newTask:Task[] = [];
     setTasks(newTask);
   }
 
-  function handleSearchChange(e) {
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
     console.log(query);
   }
 
-  function handleOnChange(newTask) {
+  function handleOnChange(newTask: Task) {
     const newTasks = tasks.map(task => {
       if (task.id === newTask.id) {
         return newTask; 
@@ -59,7 +60,7 @@ export default function ToDoApp() {
     setTasks(newTasks); 
   }
 
-  function handleOnDelete(taskId) {
+  function handleOnDelete(taskId: number) {
     const newTasks = tasks.filter(task => task.id !== taskId); 
     setTasks(newTasks); 
   }
@@ -70,7 +71,7 @@ export default function ToDoApp() {
       <SearchInput
         onAdd={handleAdd}
         onChange={handleSearchChange}
-        value={query}
+        query={query}
         empty={emptyTaskList}
       />
       <ToDoItems tasks={filteredTasks} empty={emptyTaskList} onChange={handleOnChange} onDelete={handleOnDelete}/>

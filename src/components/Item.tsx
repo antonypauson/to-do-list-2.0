@@ -1,7 +1,11 @@
 import Paper from "@mui/material/Paper";
+import type { ReactNode } from "react";
 
+type ItemProps = {
+  children: ReactNode; 
+}
 
-export default function Item({children}){
+export default function Item({children}: ItemProps){
   return (
     <Paper sx={{
       display: 'flex', 
